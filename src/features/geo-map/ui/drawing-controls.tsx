@@ -6,7 +6,7 @@ interface DrawingControlsProps {
   verticesCount: number;
   isFinished: boolean;
   onUndo: () => void;
-  onFinish: () => void;
+  onFinish?: () => void;
   onClear: () => void;
 }
 
@@ -14,7 +14,6 @@ const DrawingControls = ({
   verticesCount,
   isFinished,
   onUndo,
-  onFinish,
   onClear,
 }: DrawingControlsProps) => {
   const { t } = useTranslation();
