@@ -16,11 +16,6 @@ export const sidebarMenu = [
     url: "/geo-map",
     icon: <Map />,
   },
-   {
-    title: "geo-map-v2",
-    url: "/geo-map-v2",
-    icon: <Map />,
-  },
 ];
 
 export const langs = [

@@ -1,4 +1,4 @@
-import { GeoMap, GeoMapV2 } from "@/pages/geo-map";
+import { GeoMap } from "@/pages/geo-map";
 import { Overview } from "@/pages/overview";
 import { Users } from "@/pages/users";
 
@@ -15,8 +15,5 @@ export const routes = [
     path: "/geo-map",
     component: GeoMap,
   },
-  {
-    path: "/geo-map-v2",
-    component: GeoMapV2,
-  },
+  
 ];
