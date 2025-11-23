@@ -13,7 +13,7 @@ import { useMapInteraction } from "../hooks/use-map-interaction";
 
 export default function PolygonMap() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | any>(null);
 
   const [polygons, setPolygons] = useState<Polygon[]>([]);
   const [currentVertices, setCurrentVertices] = useState<[number, number][]>(
@@ -149,7 +149,7 @@ export default function PolygonMap() {
   const selectedPolygonData = polygons.find((p) => p.id === selectedPolygon);
 
   return (
-    <div className="w-full h-screen flex flex-col bg-gray-100">
+    <div className="w-full min-h-[calc(100vh-100px)] flex flex-col bg-gray-100">
       <MapControls
         isDrawing={isDrawing}
         currentVerticesCount={currentVertices.length}

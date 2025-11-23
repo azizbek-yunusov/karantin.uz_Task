@@ -1,6 +1,3 @@
-Albatta! Men sizga barcha kodni batafsil tahlil qilib, har bir qismni tushuntirib beraman.
-
----
 
 ## 📚 **TO'LIQ KOD TAHLILI**
 
@@ -1244,5 +1241,3 @@ Biz **professional darajadagi** xarita ilovasini yaratdik:
 - Reusable components
 - Easy to test
 - Easy to extend
-
-Bu loyiha **portfolio** uchun juda yaxshi misol va **production-ready** kod! 🎉
