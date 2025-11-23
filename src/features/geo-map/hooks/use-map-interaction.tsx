@@ -1,9 +1,8 @@
-import { MapUtils } from "@/shared/lib/geo-map";
 import type { Coordinate, MapState } from "@/shared/types/GeoMap";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useMapInteraction = (
-  canvasRef: React.RefObject<HTMLCanvasElement>,
+  _canvasRef: React.RefObject<HTMLCanvasElement>,
   isDrawing: boolean,
   mapState: MapState,
   setMapState: React.Dispatch<React.SetStateAction<MapState>>

@@ -1,3 +1,7 @@
+import { Button } from "@/components/ui/button";
+import { Check, PenIcon, Trash, Undo2, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
 interface MapControlsProps {
   isDrawing: boolean;
   currentVerticesCount: number;
@@ -19,58 +23,52 @@ const MapControls = ({
   onCancelDrawing,
   onClearAll,
 }: MapControlsProps) => {
+  const { t } = useTranslation();
   return (
-    <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 shadow-lg">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-3">
-          🗺️ Interaktiv Poligon Xaritasi
-        </h1>
-
+    <div className=" text-white p-3">
+      <div className="">
         <div className="flex flex-wrap gap-2">
           {!isDrawing ? (
-            <button
-              onClick={onStartDrawing}
-              className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-medium transition-colors shadow-md"
-            >
-              ✏️ Poligon Chizish
-            </button>
+            <Button onClick={onStartDrawing}>
+              <PenIcon /> {t("draw-polygon")}
+            </Button>
           ) : (
             <>
-              <button
+              <Button
                 onClick={onFinishPolygon}
                 disabled={currentVerticesCount < 3}
                 className="bg-green-500 hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium transition-colors shadow-md"
               >
-                ✓ Tugatish ({currentVerticesCount} vertex)
-              </button>
-              <button
+                <Check /> {t("finish")} ({currentVerticesCount} {t("vertex")})
+              </Button>
+              <Button
                 onClick={onUndoVertex}
                 disabled={currentVerticesCount === 0}
                 className="bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-400 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium transition-colors shadow-md"
               >
-                ↶ Ortga
-              </button>
-              <button
+                <Undo2 /> {t("undo")}
+              </Button>
+              <Button
                 onClick={onCancelDrawing}
                 className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg font-medium transition-colors shadow-md"
               >
-                ✕ Bekor qilish
-              </button>
+                <X /> {t("cancel")}
+              </Button>
             </>
           )}
 
           {polygonsCount > 0 && (
-            <button
+            <Button
               onClick={onClearAll}
               className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-medium transition-colors shadow-md ml-auto"
             >
-              🗑️ Barchasini o'chirish
-            </button>
+              <Trash /> {t("all-delete")}
+            </Button>
           )}
         </div>
 
         {isDrawing && (
-          <div className="mt-3 text-sm bg-blue-800 bg-opacity-50 rounded-lg p-3">
+          <div className="mt-3 text-sm bg-sky-600 bg-opacity-50 rounded-lg p-3">
             💡 Xaritada nuqtalarni bosish orqali poligon chizing. Kamida 3 ta
             vertex kerak.
           </div>

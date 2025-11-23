@@ -1,13 +1,15 @@
-import { useMapInteraction } from "@/features/hooks/use-map-interaction";
-import { useTileLoader } from "@/features/hooks/use-title-loader";
 import { CoordinateProjection, MapUtils } from "@/shared/lib/geo-map";
 import type { MapState, Polygon } from "@/shared/types/GeoMap";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { MapRenderer } from "../map/map-renderer ";
-import ZoomControls from "@/widgets/geo-map/zoom-controls";
-import PolygonStats from "@/widgets/geo-map/polygon-stats";
-import PolygonList from "@/widgets/geo-map/polygon-list";
-import MapControls from "@/widgets/geo-map/map-controls";
+import {
+  MapControls,
+  PolygonList,
+  PolygonStats,
+  ZoomControls,
+} from "@/widgets/geo-map";
+import { useTileLoader } from "../hooks/use-title-loader";
+import { useMapInteraction } from "../hooks/use-map-interaction";
 
 export default function PolygonMap() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -160,6 +162,12 @@ export default function PolygonMap() {
       />
 
       <div className="flex-1 flex relative overflow-hidden">
+        <PolygonList
+          polygons={polygons}
+          selectedPolygonId={selectedPolygon}
+          onSelectPolygon={setSelectedPolygon}
+          onDeletePolygon={deletePolygon}
+        />
         <div className="flex-1 relative" ref={mapContainerRef}>
           <canvas
             ref={canvasRef}
@@ -206,18 +214,7 @@ export default function PolygonMap() {
               </button>
             </div>
           )}
-
-          <div className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 rounded text-xs text-gray-600">
-            © OpenStreetMap
-          </div>
         </div>
-
-        <PolygonList
-          polygons={polygons}
-          selectedPolygonId={selectedPolygon}
-          onSelectPolygon={setSelectedPolygon}
-          onDeletePolygon={deletePolygon}
-        />
       </div>
     </div>
   );

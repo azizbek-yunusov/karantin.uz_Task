@@ -13,7 +13,7 @@ const AppLayout = ({
   return (
     <main className="bg-zinc-50 dark:bg-background/95 w-full">
       <Navbar title={t(title)} />
-      <div className="container pt-8 pb-8 px-4 sm:px-8">{children}</div>
+      <div className="container p-4">{children}</div>
     </main>
   );
 };
