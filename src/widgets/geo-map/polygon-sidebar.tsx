@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 const PolygonSidebar = ({
   vertices,
   isFinished,
-  message,
   area,
   perimeter,
   onRemoveVertex,
@@ -19,7 +18,6 @@ const PolygonSidebar = ({
 }: {
   vertices: Vertex[];
   isFinished: boolean;
-  message: string;
   area: number;
   perimeter: number;
   onRemoveVertex: (index: number) => void;
@@ -38,10 +36,7 @@ const PolygonSidebar = ({
         onClear={onClear}
       />
 
-      <div className="mt-2 text-sm text-gray-700 bg-blue-50 p-2 rounded">
-        {message}
-      </div>
-
+      <MetricsDisplay area={area} perimeter={perimeter} polygon={vertices} />
       <div>
         <h3 className="font-semibold text-zinc-800 dark:text-zinc-200 mb-2">
           {t("vertices-list")}
@@ -52,8 +47,6 @@ const PolygonSidebar = ({
           isEditable={!isFinished}
         />
       </div>
-
-      <MetricsDisplay area={area} perimeter={perimeter} />
     </div>
   );
 };

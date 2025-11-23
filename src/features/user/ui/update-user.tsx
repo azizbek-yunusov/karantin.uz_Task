@@ -32,7 +32,7 @@ import { format } from "date-fns";
 import { useUsers } from "../store/userStore";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
-import type { User } from "@/entities/user";
+import type {User } from "@/entities/user";
 
 const UpdateUser = ({
   open,

@@ -16,10 +16,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import Pagination from "./pagination";
+import { useTranslation } from "react-i18next";
 
-export function DataTable({ columns, data }: { columns: ColumnDef<any>[]; data: any[] }) {
-
+const DataTable = ({
+  columns,
+  data,
+}: {
+  columns: ColumnDef<any>[];
+  data: any[];
+}) => {
   const table = useReactTable({
     data,
     columns,
@@ -28,10 +34,9 @@ export function DataTable({ columns, data }: { columns: ColumnDef<any>[]; data: 
     getPaginationRowModel: getPaginationRowModel(),
     getCoreRowModel: getCoreRowModel(),
   });
-
+  const { t } = useTranslation();
   return (
     <div className="space-y-4">
-      
       <div className="rounded-md border bg-white dark:bg-background/95">
         <Table>
           <TableHeader>
@@ -66,7 +71,7 @@ export function DataTable({ columns, data }: { columns: ColumnDef<any>[]; data: 
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="text-center">
-                  No results found
+                  {t("no-results-found")}
                 </TableCell>
               </TableRow>
             )}
@@ -74,31 +79,9 @@ export function DataTable({ columns, data }: { columns: ColumnDef<any>[]; data: 
         </Table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-end space-x-2 py-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-
-        <span className="text-sm text-muted-foreground ml-2">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </span>
-      </div>
+      <Pagination table={table} />
     </div>
   );
-}
+};
+
+export default DataTable;

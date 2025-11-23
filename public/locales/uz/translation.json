@@ -28,5 +28,17 @@
   "actions": "Amallar",
   "male": "Erkak",
   "female": "Ayol",
-  "search": "Qidiruv"
+  "search": "Qidiruv",
+  "undo": "Ortga",
+  "finish": "Tugatish",
+  "clear": "Tozalash",
+  "measurements": "Poligon Ma'lumotlari",
+  "vertices-list": "Vertexlar ro'yxati",
+  "no-results-found": "Ro'yxat bo'sh",
+  "area": "Maydon",
+  "perimeter": "Perimetr",
+  "vertices": "Vertexlar",
+  "ta": "ta",
+  "km": "km",
+  "m": "m"
 }

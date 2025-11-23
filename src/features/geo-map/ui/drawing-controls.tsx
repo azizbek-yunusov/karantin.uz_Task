@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check, Trash, Undo2 } from "lucide-react";
+import {  Trash, Undo2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface DrawingControlsProps {
@@ -29,14 +29,7 @@ const DrawingControls = ({
       >
         <Undo2 /> {t("undo")}
       </Button>
-      <Button
-        onClick={onFinish}
-        variant="default"
-        className="bg-green-500"
-        disabled={!isFinished}
-      >
-        <Check /> {t("finish")}
-      </Button>
+      
       <Button onClick={onClear} variant="destructive">
         <Trash /> {t("clear")}
       </Button>

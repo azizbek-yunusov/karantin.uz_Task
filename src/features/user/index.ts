@@ -1,4 +1,4 @@
-export { default as AddUser } from "./add-user/add-user";
-export { default as UpdateUser } from "./update-user/update-user";
-export { default as UsersTable } from "./list/UsersTable";
-export { default as DeleteUser } from "./delete-user/delete-user";
+export { default as AddUser } from "./ui/add-user";
+export { default as UpdateUser } from "./ui/update-user";
+export { default as UsersTable } from "./ui/users-table";
+export { default as DeleteUser } from "./ui/delete-user";
