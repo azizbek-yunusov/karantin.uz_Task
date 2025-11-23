@@ -1,10 +1,12 @@
 import type { Vertex } from "@/entities/map";
-import MapClickHandler from "@/features/geo-map/ui/MapClickHandler";
-import PolygonShape from "@/features/geo-map/ui/PolygonShape";
-import VertexMarker from "@/features/geo-map/ui/VertexMarker";
 import { MAP_CONFIG } from "@/shared/config/map";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import {
+  MapClickHandler,
+  PolygonShape,
+} from "@/features/geo-map";
+import VertexMarker from "@/features/geo-map/ui/vertex-marker";
 
 const PolygonMap = ({
   vertices,

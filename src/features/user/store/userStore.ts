@@ -1,5 +1,4 @@
-import { loadUsersFromDB, saveUsersToDB } from "@/shared/lib/db";
-import type { User } from "@/shared/types/User";
+import { loadUsersFromDB, saveUsersToDB, type User } from "@/entities/user";
 import { create } from "zustand";
 
 interface UsersState {

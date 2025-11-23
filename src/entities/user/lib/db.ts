@@ -1,5 +1,5 @@
 import { set, get } from "idb-keyval"
-import type { User } from "../types/User"
+import type { User } from "../model/types"
 
 export async function saveUsersToDB(users: User[]) {
   return await set("users", users)

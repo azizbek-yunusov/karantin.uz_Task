@@ -4,10 +4,7 @@ import { useCallback, useState } from "react";
 import type { ModalType } from "@/shared/types";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import UsersTable from "@/features/user/list/UsersTable";
-import AddUser from "@/features/user/add-user/add-user";
-import UpdateUser from "@/features/user/update-user/update-user";
-import DeleteUser from "@/features/user/delete-user/delete-user";
+import { AddUser, DeleteUser, UpdateUser, UsersTable } from "@/features/user";
 
 const PAGE_URL = "/users";
 const UsersList = () => {

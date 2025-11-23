@@ -32,7 +32,7 @@ import { format } from "date-fns";
 import { useUsers } from "../store/userStore";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
-import type { AddUser, User } from "@/shared/types/User";
+import type { User } from "@/entities/user";
 
 const UpdateUser = ({
   open,
@@ -49,8 +49,14 @@ const UpdateUser = ({
   const id = sp.get("edit");
   const findUser: User | undefined = users?.find((item) => item.id == id);
   const formSchema = z.object({
-    firstName: z.string().min(2, t("first-name-is-required")).max(20, t("first-name-max-length")),
-    lastName: z.string().min(2, t("last-name-is-required")).max(20, t("last-name-max-length")),
+    firstName: z
+      .string()
+      .min(2, t("first-name-is-required"))
+      .max(20, t("first-name-max-length")),
+    lastName: z
+      .string()
+      .min(2, t("last-name-is-required"))
+      .max(20, t("last-name-max-length")),
     birthDate: z.date({ message: t("birth-date-is-required") }),
     gender: z.string().min(1, t("gender-is-required")),
   });
@@ -61,10 +67,9 @@ const UpdateUser = ({
     if (findUser) {
       setValue("firstName", findUser?.firstName);
       setValue("lastName", findUser?.lastName);
-      setValue(
-        "birthDate",
-        findUser?.birthDate ? new Date(findUser.birthDate) : undefined
-      );
+      if (findUser?.birthDate) {
+        setValue("birthDate", new Date(findUser.birthDate));
+      }
       setValue("gender", findUser?.gender);
     }
   }, [findUser]);
@@ -84,14 +89,13 @@ const UpdateUser = ({
   const onSubmit = (data: FormData) => {
     const body = {
       ...data,
-      id: id?.toString()
+      id: String(id),
     };
-    
-    updateUser(String(id), body as AddUser);
+
+    updateUser(String(id), body);
     onClose();
     toast.success(t("updated-user"));
   };
-
 
   return (
     <Sheet open={open} onOpenChange={onClose}>

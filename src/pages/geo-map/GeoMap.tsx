@@ -1,9 +1,8 @@
 import AppLayout from "@/components/layout/app-layout";
 import { calculatePolygonMetrics } from "@/entities/map/lib/calculations";
-import InteractiveMapPolygonDrawer from "@/features/geo-map/leaflet";
-import { usePolygonDrawing } from "@/features/geo-map/model/usePolygonDrawing";
-import PolygonMap from "@/widgets/geo-map/PolygonMap";
-import PolygonSidebar from "@/widgets/geo-map/PolygonSidebar";
+import { usePolygonDrawing } from "@/features/geo-map/model/use-polygon-drawing";
+import { PolygonMap } from "@/widgets/geo-map";
+import PolygonSidebar from "@/widgets/geo-map/polygon-sidebar";
 import { useRef } from "react";
 
 const GeoMap = () => {

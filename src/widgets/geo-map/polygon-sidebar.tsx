@@ -1,6 +1,10 @@
-import { DrawingControls } from "@/features/geo-map/ui/drawing-controls";
-import MetricsDisplay from "@/features/geo-map/ui/MetricsDisplay";
-import VertexList from "@/features/geo-map/ui/VertexList";
+import type { Vertex } from "@/entities/map";
+import {
+  DrawingControls,
+  MetricsDisplay,
+  VertexList,
+} from "@/features/geo-map";
+import { useTranslation } from "react-i18next";
 
 const PolygonSidebar = ({
   vertices,
@@ -13,18 +17,19 @@ const PolygonSidebar = ({
   onFinish,
   onClear,
 }: {
-  vertices: any;
-  isFinished: any;
-  message: any;
-  area: any;
-  perimeter: any;
-  onRemoveVertex: any;
-  onUndo: any;
-  onFinish: any;
-  onClear: any;
+  vertices: Vertex[];
+  isFinished: boolean;
+  message: string;
+  area: number;
+  perimeter: number;
+  onRemoveVertex: (index: number) => void;
+  onUndo: () => void;
+  onFinish: () => void;
+  onClear: () => void;
 }) => {
+  const { t } = useTranslation();
   return (
-    <div className="col-span-4 bg-white border-r p-4 overflow-auto flex flex-col gap-4">
+    <div className="col-span-4 bg-white dark:bg-background/95 border-r p-4 overflow-auto flex flex-col gap-4">
       <DrawingControls
         verticesCount={vertices.length}
         isFinished={isFinished}
@@ -38,7 +43,9 @@ const PolygonSidebar = ({
       </div>
 
       <div>
-        <h3 className="font-semibold text-gray-800 mb-2">Vertices List</h3>
+        <h3 className="font-semibold text-zinc-800 dark:text-zinc-200 mb-2">
+          {t("vertices-list")}
+        </h3>
         <VertexList
           vertices={vertices}
           onRemove={onRemoveVertex}

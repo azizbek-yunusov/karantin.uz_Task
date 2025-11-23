@@ -2,7 +2,13 @@ import type { Vertex } from "@/entities/map";
 import type React from "react";
 import { Polygon } from "react-leaflet";
 
-const PolygonShape = ({ vertices, polygonRef }: { vertices: Vertex[]; polygonRef: React.RefObject<L.Polygon> }) => {
+const PolygonShape = ({
+  vertices,
+  polygonRef,
+}: {
+  vertices: Vertex[];
+  polygonRef: React.RefObject<L.Polygon>;
+}) => {
   if (vertices.length < 3) return null;
 
   return (

@@ -7,12 +7,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Edit, Eye, MoreHorizontal, Trash } from "lucide-react";
-import type { User } from "@/shared/types/User";
 import { DataTable } from "@/components/data-table/data-table";
 import { useTranslation } from "react-i18next";
 import type { ModalType } from "@/shared/types";
 import { useUsers } from "../store/userStore";
 import { format } from "date-fns";
+import type { User } from "@/entities/user";
 
 const UsersTable = ({
   handleModal,
