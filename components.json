@@ -23,7 +23,8 @@
     "store": "@/app/store", 
     "shared": "@/shared",
     "features": "@/features",
-    "widgets": "@/widgets"
+    "widgets": "@/widgets",
+    "entities": "@/entities"
   },
   "registries": {}
 }

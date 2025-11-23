@@ -1,6 +1,6 @@
 import AppLayout from "@/components/layout/app-layout";
-import UsersList from "@/features/user/list";
 import { useUsers } from "@/features/user/store/userStore";
+import UsersList from "@/widgets/user/users-list";
 import { useEffect } from "react";
 
 const Users = () => {

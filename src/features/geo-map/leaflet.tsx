@@ -13,6 +13,9 @@ import "leaflet/dist/leaflet.css";
 import { Check, Trash, Undo, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { MapControls } from "@/widgets/geo-map";
+import type { Vertex } from "@/entities/map";
+import { MAP_CONFIG } from "@/shared/config/map";
 
 // Improved UI and features
 // • Vertex drag & remove
@@ -24,9 +27,15 @@ import { useTranslation } from "react-i18next";
 // • Clear, Finish, Undo, Export GeoJSON, Export WKT
 // • Editable polygon (before finish)
 
-const defaultCenter = [41.2995, 69.2401];
-
-function VertexHandler({ vertices, setVertices, isFinished }) {
+function VertexHandler({
+  vertices,
+  setVertices,
+  isFinished,
+}: {
+  vertices: Vertex[];
+  setVertices: (vertices: Vertex[]) => void;
+  isFinished: boolean;
+}) {
   useMapEvents({
     click(e) {
       if (isFinished) return;
@@ -42,7 +51,6 @@ export default function InteractiveMapPolygonDrawer() {
   const [vertices, setVertices] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
   const [message, setMessage] = useState("Boshlash uchun xaritada bosing.");
-  const [darkMode, setDarkMode] = useState(false);
   const polygonRef = useRef(null);
 
   // --- AREA & PERIMETER ---
@@ -134,26 +142,37 @@ export default function InteractiveMapPolygonDrawer() {
   `;
 
   return (
-    <div className="min-h-[calc(100vh-100px)]  w-full flex">
-      <div className="w-72 bg-white border-r p-4 overflow-auto flex flex-col gap-4 h">
-        <h2 className="text-xl font-semibold">{t("draw-polygon")}</h2>
+    <div className="min-h-[calc(100vh-100px)]  w-full">
+      <MapControls
+        isDrawing={true}
+        currentVerticesCount={vertices.length}
+        polygonsCount={10}
+        onStartDrawing={finishPolygon}
+        onFinishPolygon={finishPolygon}
+        onUndoVertex={undoLast}
+        onCancelDrawing={undoLast}
+        onClearAll={clearAll}
+      />
+      <div className="grid grid-cols-12">
+        <div className="col-span-4 bg-white border-r p-4 overflow-auto flex flex-col gap-4 h">
+          <h2 className="text-xl font-semibold">{t("draw-polygon")}</h2>
 
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            onClick={undoLast}
-            disabled={vertices.length === 0 || isFinished}
-          >
-            <Undo /> {t("undo")}
-          </Button>
-          <Button onClick={finishPolygon} disabled={isFinished}>
-            <Check /> {t("finish")}
-          </Button>
-          <Button onClick={clearAll}>
-            <Trash /> {t("clear")}
-          </Button>
-        </div>
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              onClick={undoLast}
+              disabled={vertices.length === 0 || isFinished}
+            >
+              <Undo /> {t("undo")}
+            </Button>
+            <Button onClick={finishPolygon} disabled={isFinished}>
+              <Check /> {t("finish")}
+            </Button>
+            <Button onClick={clearAll}>
+              <Trash /> {t("clear")}
+            </Button>
+          </div>
 
-        {/* <h3 className="text-md font-semibold">Exports</h3>
+          {/* <h3 className="text-md font-semibold">Exports</h3>
         <div className="flex gap-2">
           <button
             className="px-3 py-1 rounded bg-green-600 text-white"
@@ -171,88 +190,88 @@ export default function InteractiveMapPolygonDrawer() {
           </button>
         </div> */}
 
-        <div className="mt-4 text-sm text-gray-700">{message}</div>
+          <div className="mt-4 text-sm text-gray-700">{message}</div>
 
-        <h3 className="font-semibold">Vertices list</h3>
-        <div className="flex flex-col gap-2 max-h-48 overflow-y-scroll border border-zinc-200 p-1 rounded">
-          {vertices.map((v, i) => (
-            <div
-              key={i}
-              className="flex justify-between bg-gray-100 p-1.5 text-sm rounded"
-            >
-              <span>
-                {i + 1}. Lat: {v[0].toFixed(5)}, Lng: {v[1].toFixed(5)}
-              </span>
-              {!isFinished && (
-                <button
-                  className="text-red-600 font-bold cursor-pointer"
-                  onClick={() => removeVertex(i)}
-                >
-                  <X />
-                </button>
-              )}
-            </div>
-          ))}
+          <h3 className="font-semibold">Vertices list</h3>
+          <div className="flex flex-col gap-2 max-h-48 overflow-y-scroll border border-zinc-200 p-1 rounded">
+            {vertices.map((v, i) => (
+              <div
+                key={i}
+                className="flex justify-between bg-gray-100 p-1.5 text-sm rounded"
+              >
+                <span>
+                  {i + 1}. Lat: {v[0].toFixed(5)}, Lng: {v[1].toFixed(5)}
+                </span>
+                {!isFinished && (
+                  <button
+                    className="text-red-600 font-bold cursor-pointer"
+                    onClick={() => removeVertex(i)}
+                  >
+                    <X />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* AREA & PERIMETER DISPLAY */}
+          <h3 className="font-semibold">Measurements</h3>
+          <p>Area: {(area / 1000000).toFixed(3)} km²</p>
+          <p>Perimeter: {perimeter.toFixed(2)} m</p>
         </div>
 
-        {/* AREA & PERIMETER DISPLAY */}
-        <h3 className="font-semibold">Measurements</h3>
-        <p>Area: {(area / 1000000).toFixed(3)} km²</p>
-        <p>Perimeter: {perimeter.toFixed(2)} m</p>
-      </div>
+        <div className="flex-1 col-span-8">
+          <MapContainer
+            center={MAP_CONFIG.defaultCenter}
+            zoom={MAP_CONFIG.defaultZoom}
+            className="h-full w-full"
+          >
+            <TileLayer url={MAP_CONFIG.tileLayerUrl} />
 
-      {/* MAP */}
-      <div className="flex-1">
-        <MapContainer
-          center={defaultCenter}
-          zoom={13}
-          className="h-full w-full"
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {!isFinished && (
+              <VertexHandler
+                vertices={vertices}
+                setVertices={setVertices}
+                isFinished={isFinished}
+              />
+            )}
 
-          {!isFinished && (
-            <VertexHandler
-              vertices={vertices}
-              setVertices={setVertices}
-              isFinished={isFinished}
-            />
-          )}
+            {vertices.map((v, i) => (
+              <Marker
+                key={i}
+                position={v}
+                draggable={!isFinished}
+                eventHandlers={{
+                  dragend: (e) => {
+                    const lat = e.target.getLatLng().lat;
+                    const lng = e.target.getLatLng().lng;
+                    const newArr = [...vertices];
+                    newArr[i] = [lat, lng];
+                    setVertices(newArr);
+                  },
+                }}
+                icon={
+                  new L.DivIcon({
+                    className: "vertex-marker",
+                    html: pointIconHtml(i),
+                  })
+                }
+              />
+            ))}
 
-          {vertices.map((v, i) => (
-            <Marker
-              key={i}
-              position={v}
-              draggable={!isFinished}
-              eventHandlers={{
-                dragend: (e) => {
-                  const lat = e.target.getLatLng().lat;
-                  const lng = e.target.getLatLng().lng;
-                  const newArr = [...vertices];
-                  newArr[i] = [lat, lng];
-                  setVertices(newArr);
-                },
-              }}
-              icon={
-                new L.DivIcon({
-                  className: "vertex-marker",
-                  html: pointIconHtml(i),
-                })
-              }
-            />
-          ))}
+            {vertices.length >= 2 && !isFinished && (
+              <Polyline positions={vertices} />
+            )}
 
-          {vertices.length >= 2 && !isFinished && (
-            <Polyline positions={vertices} />
-          )}
-
-          {vertices.length >= 3 && (
-            <Polygon
-              ref={polygonRef}
-              positions={vertices}
-              pathOptions={{ color: "green", fillOpacity: 0.25 }}
-            />
-          )}
-        </MapContainer>
+            {vertices.length >= 3 && (
+              <Polygon
+                ref={polygonRef}
+                positions={vertices}
+                pathOptions={{ color: "green", fillOpacity: 0.25 }}
+              />
+            )}
+          </MapContainer>
+        </div>
       </div>
     </div>
   );
